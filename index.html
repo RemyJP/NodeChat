@@ -1,0 +1,91 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Socket.IO chat</title>
+        <!--color palette- https://coolors.co/1e90ff-071013-75abbc-a2aebb-dfe0e2-->
+        <style>
+
+            .wrapper, html, body {
+                height: 100%;
+                margin: 0;
+            }
+
+            .wrapper {
+                display: flex;
+                flex-direction: column;
+            }
+
+            #row {
+                flex: 2;
+                display: flex;
+            }
+
+            #user-list, #msg-list {
+                border: 1px #000 solid;
+            }
+
+            #user-list {
+                flex: 0 0 25%;
+            }
+
+            #msg-list {
+                flex: 1 1;
+            }
+
+            .header {
+                text-align: center;
+                border-bottom: 1px #000 solid;
+                background-color: #1e90ff;
+                color: #fff;
+                font-weight: bold;
+            }
+
+            form {
+                width: 100%;
+                margin-top: 10px;
+                margin-bottom: 20px;
+            }
+
+            form input {
+                width: 85%;
+                margin-right: .5%;
+            }
+
+            form button {
+                width: 9%;
+            }
+
+        </style>
+
+    </head>
+    <body>
+        <div class="wrapper">
+            <div id="row">
+                <div id="user-list">
+                        <div class='header'>USERS</div>
+                            <ul id='users'></ul>
+                    </div>
+                <div id="msg-list">
+                        <ul id="messages"></ul>
+                </div>
+            </div>
+            <div>
+                <div>
+                    <form action="">
+                        <input id='m' autocomplete="off"/><button>Send</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="http://code.jquery.com/jquery-1.12.1.js"></script>
+        <script>
+            var socket=io();
+            $('form').submit(function(){
+                socket.emit('chat message', $('#m').val());
+                $('#m').val('');
+                return false;
+            });
+        </script>
+    </body>
+</html>
